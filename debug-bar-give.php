@@ -36,7 +36,7 @@ if ( ! class_exists( 'WP' ) ) {
  *
  * @return array
  */
-function michael_add_debug_bar_transients_panel( $panels ) {
+function debug_bar_give_add__panel( $panels ) {
 	if ( ! class_exists( 'Debug_Bar_Give' ) ) {
 		include( 'class-debug-bar-give.php' );
 		$panels[] = new Debug_Bar_Give();
@@ -44,4 +44,4 @@ function michael_add_debug_bar_transients_panel( $panels ) {
 
 	return $panels;
 }
-add_filter( 'debug_bar_panels', 'michael_add_debug_bar_transients_panel' );
+add_filter( 'debug_bar_panels', 'debug_bar_give_add__panel' );
