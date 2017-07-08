@@ -133,21 +133,21 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 			number_format( count( $this->give_filters ) )
 		);
 
-		echo '<h3 id="meta_data">' . esc_html__( 'Give Meta Data', 'debug-bar-give' ) . '</h3>';
+		echo '<h3 id="meta_data">' . esc_html__( 'GiveWP metadata', 'debug-bar-give' ) . '</h3>';
 		if ( empty( $this->give_meta_filtered ) ) {
 			esc_html_e( 'No meta found.', 'debug-bar-give' );
 		} else {
 			$this->display_meta_fields( $this->give_meta_filtered );
 		}
 
-		echo '<h3 id="action_hooks">' . esc_html__( 'Give action hooks', 'debug-bar-give' ) . '</h3>';
+		echo '<h3 id="action_hooks">' . esc_html__( 'GiveWP action hooks', 'debug-bar-give' ) . '</h3>';
 		if ( empty( $this->give_actions ) ) {
 			esc_html_e( 'No actions for this request', 'debug-bar-give' );
 		} else {
 			$this->display_action_hooks( $this->give_actions );
 		}
 
-		echo '<h3 id="filter_hooks">' . esc_html__( 'Give filter hooks', 'debug-bar-give' ) . '</h3>';
+		echo '<h3 id="filter_hooks">' . esc_html__( 'GiveWP filter hooks', 'debug-bar-give' ) . '</h3>';
 		if ( empty( $this->give_filters ) ) {
 			esc_html_e( 'No filters for this request', 'debug-bar-give' );
 		} else {
