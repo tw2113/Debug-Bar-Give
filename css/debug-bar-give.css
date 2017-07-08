@@ -1,3 +1,7 @@
+.debug-bar-give-wrapper {
+	clear: both;
+	width: 100%;
+}
 .debug-bar-give-table h3 {
 	font-family: georgia, times, serif;
 	font-size: 22px;
@@ -5,43 +9,51 @@
 	clear: both;
 }
 
-table.debug-bar-give-filters {
+table.debug-bar-give-filters,
+table.debug-bar-give-meta {
+	clear: both;
 	width: 100%;
 	border-collapse: collapse;
-	cell-padding: 1em;
-	clear: both;
-	line-height: 1.5;
-	font-size: 12px;
 	table-layout: auto;
+	font-size: 12px;
+	line-height: 1.5;
+	cell-padding: 1em;
 }
 
 table.debug-bar-give-filters thead th,
-table.debug-bar-give-filters tfoot th {
+table.debug-bar-give-filters tfoot th,
+table.debug-bar-give-meta thead th,
+table.debug-bar-give-meta tfoot th {
 	padding: 0.7em 5px;
 	width: auto;
+	background-color: rgb(78, 173, 97);
+	color: rgb(255, 255, 255);
 	text-align: center;
-	background-color: #E8E8E8;
 }
 
-table.debug-bar-give-filters tr {
+table.debug-bar-give-filters tr,
+table.debug-bar-give-meta tr {
 	border-bottom: 1px solid #ccc;
 }
 
 table.debug-bar-give-filters thead th,
 table.debug-bar-give-filters thead td,
-table.debug-bar-give-filters tfoot th,
-table.debug-bar-give-filters tfoot td {
+table.debug-bar-give-meta tfoot th,
+table.debug-bar-give-meta tfoot td {
 	border: 1px solid #ccc;
 }
 
 table.debug-bar-give-filters tbody th,
-table.debug-bar-give-filters tbody td {
+table.debug-bar-give-filters tbody td,
+table.debug-bar-give-meta tbody th,
+table.debug-bar-give-meta tbody td {
 	padding: 10px 2em 5px 5px;
 	vertical-align: top;
 	border: 1px solid #ccc;
 }
 
-table.debug-bar-give-filters tbody th {
+table.debug-bar-give-filters tbody th
+table.debug-bar-give-meta tbody th{
 	font-weight: bold;
 	text-align: left;
 	max-width: 300px;
@@ -66,4 +78,14 @@ table.debug-bar-give-filters td ul {
 
 .debug-bar-give-table ul li em {
 	color: #999999;
+}
+.debug-bar-give-actions-list {
+	width: 49%;
+	float: left;
+}
+.debug-bar-give-actions-list ul {
+	list-style: none;
+}
+.debug-bar-give-actions-list li {
+	margin-bottom: 10px;
 }
