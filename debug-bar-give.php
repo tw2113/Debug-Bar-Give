@@ -35,7 +35,7 @@ if ( ! class_exists( 'WP' ) ) {
  *
  * @return array
  */
-function debug_bar_give_add__panel( $panels ) {
+function debug_bar_give_add_panel( $panels ) {
 	if ( ! class_exists( 'Debug_Bar_Give' ) ) {
 		include( 'class-debug-bar-give.php' );
 		$panels[] = new Debug_Bar_Give();
@@ -43,4 +43,23 @@ function debug_bar_give_add__panel( $panels ) {
 
 	return $panels;
 }
-add_filter( 'debug_bar_panels', 'debug_bar_give_add__panel' );
+add_filter( 'debug_bar_panels', 'debug_bar_give_add_panel' );
+
+if ( ! function_exists( 'dbg_is_closure' ) ) {
+	/**
+	 * Function to to check for closures
+	 *
+	 * @param   mixed $arg function name
+	 *
+	 * @return  boolean $closurecheck return whether or not a closure
+	 */
+	function dbg_is_closure( $arg ) {
+		if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
+			return false;
+		}
+
+		include_once( plugin_dir_path( __FILE__ ) . 'php5.3-closure-test.php' );
+
+		return debug_bar_give_is_closure( $arg );
+	}
+}
