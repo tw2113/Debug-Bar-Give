@@ -133,10 +133,6 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 * @since 1.0.0
 	 */
 	public function render() {
-		if ( ! $this->give_has_form ) {
-			echo '<h2>' . esc_html__( 'No GiveWP form found.', 'debug-bar-give' ) . '</h2>';
-			return;
-		}
 
 		printf(
 			'<h2><span>%s</span>%s</h2>',
