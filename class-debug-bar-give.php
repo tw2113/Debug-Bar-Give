@@ -265,39 +265,131 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 * @param array $filter_hooks Filters to display.
 	 */
 	private function display_filter_hooks( $filter_hooks = array() ) {
-
-		echo '<table class="debug-bar-table" cellspacing="0">';
-		echo '<thead><tr>';
-		echo '<th class="filter-name">' . esc_html__( 'Filter', 'debug-bar-give' ) . '</th>';
-		echo '<th class="filter-priority">' . esc_html__( 'Priority', 'debug-bar-give' ) . '</th>';
-		echo '</tr></thead>';
-		echo '<tfoot><tr>';
-		echo '<th class="filter-name">' . esc_html__( 'Filter', 'debug-bar-give' ) . '</th>';
-		echo '<th class="filter-priority">' . esc_html__( 'Priority', 'debug-bar-give' ) . '</th>';
-		echo '</tr></tfoot>';
-		echo '<tbody>';
-		foreach ( $filter_hooks as $hook => $value ) {
-			echo '<tr>';
-			echo "<td>{$hook}</td>";
-			echo '<td>';
-				echo '<table>';
-				foreach ( $value->callbacks as $priority => $callbacks ) {
-					echo '<tr><td>' . $priority . '</td><td>';
-						foreach ( $callbacks as $callback ) {
-							if ( is_string( $callback['function'] ) ) {
-								echo $callback['function'];
-							} else {
-								var_dump( $callback['function']);
-							}
-						}
-					echo '</td></tr>';
+		$hook_in_count = 0;
+		?>
+		<table class="debug-bar-give-filters" cellspacing="0">
+			<thead><tr>
+				<th class="filter-name"><?php esc_html_e( 'Filter', 'debug-bar-give' ); ?></th>
+				<th class="filter-priority"><?php esc_html_e( 'Priority', 'debug-bar-give' ); ?></th>
+				<th class="filter-callbacks"><?php esc_html_e( 'Registered Callbacks', 'debug-bar-give' ); ?></th>
+			</tr></thead>
+			<tfoot><tr>
+				<th class="filter-name"><?php esc_html_e( 'Filter', 'debug-bar-give' ); ?></th>
+				<th class="filter-priority"><?php esc_html_e( 'Priority', 'debug-bar-give' ); ?></th>
+				<th class="filter-callbacks"><?php esc_html_e( 'Registered Callbacks', 'debug-bar-give' ); ?></th>
+			</tr></tfoot>
+			<tbody>
+			<?php
+			foreach ( $filter_hooks as $hook => $value ) {
+				if ( $value instanceof WP_Hook ) {
+					$filter_val = $value->callbacks;
 				}
-				echo '</table>';
-			echo '</td>';
-			echo '</tr>';
-		}
-		echo '</tbody>';
 
-		echo '</table>';
+				$filter_count = count( $filter_val );
+
+				$rowspan = '';
+				if ( $filter_count > 1 ) {
+					$rowspan = ' rowspan="' . $filter_count . '"';
+				}
+
+				echo '<tr>';
+				echo "<th{$rowspan}>{$hook}</th>";
+
+				if ( $filter_count > 0 ) {
+					$first = true;
+					foreach ( $value->callbacks as $priority => $functions ) {
+						if ( $first !== true ) {
+							echo '<tr>';
+						} else {
+							$first = false;
+						}
+						echo '<td class="prio">' . $priority . '</td>';
+						echo '<td><ul>';
+						foreach ( $functions as $single_function ) {
+							$signature = $single_function['function'];
+							if (
+								(
+									! is_string( $single_function['function'] ) &&
+									! is_object( $single_function['function'] )
+								) &&
+								(
+									! is_array( $single_function['function'] ) ||
+									(
+										is_array( $single_function['function'] ) &&
+										(
+											! is_string( $single_function['function'][0] ) &&
+											! is_object( $single_function['function'][0] )
+										)
+									)
+								)
+							) {
+								// Type 1 - not a callback.
+								continue;
+							} elseif (
+							dbg_is_closure( $single_function['function'] )
+							) {
+								// Type 2 - closure.
+								echo '<li>[<em>' . esc_html_e( 'closure', 'debug-bar-give' ) . '</em>]</li>';
+								$signature = get_class( $single_function['function'] ) . $hook_in_count;
+							} elseif (
+								(
+									is_array( $single_function['function'] ) ||
+									is_object( $single_function['function'] )
+								) &&
+								dbg_is_closure( $single_function['function'][0] )
+							) {
+								// Type 3 - closure within an array.
+								echo '<li>[<em>' . esc_html_e( 'closure', 'debug-bar-give' ) . '</em>]</li>';
+								$signature = get_class( $single_function['function'] ) . $hook_in_count;
+							} elseif (
+								is_string( $single_function['function'] ) &&
+								strpos( $single_function['function'], '::' ) === false
+							) {
+								// Type 4 - simple string function (includes lambda's).
+								$signature = sanitize_text_field( $single_function['function'] );
+								echo '<li>' . $signature . '</li>';
+							} elseif (
+								is_string( $single_function['function'] ) &&
+								strpos( $single_function['function'], '::' ) !== false
+							) {
+								// Type 5 - static class method calls - string.
+								$signature = str_replace( '::', ' :: ', sanitize_text_field( $single_function['function'] ) );
+								echo '<li>[<em>' . esc_html__( 'class', 'debug-bar-give' ) . '</em>] ' . $signature . '</li>';
+							} elseif (
+								is_array( $single_function['function'] ) &&
+								(
+									is_string( $single_function['function'][0] ) &&
+									is_string( $single_function['function'][1] )
+								)
+							) {
+								// Type 6 - static class method calls - array.
+								$signature = sanitize_text_field( $single_function['function'][0] ) . ' :: ' . sanitize_text_field( $single_function['function'][1] );
+								echo '<li>[<em>' . esc_html__( 'class', 'debug-bar-give' ) . '</em>] ' . esc_html( $signature ) . '</li>';
+							} elseif (
+								is_array( $single_function['function'] ) &&
+								(
+									is_object( $single_function['function'][0] ) &&
+									is_string( $single_function['function'][1] )
+								)
+							) {
+								// Type 7 - object method calls.
+								$signature = esc_html( get_class( $single_function['function'][0] ) ) . ' -> ' . sanitize_text_field( $single_function['function'][1] );
+								echo '<li>[<em>' . esc_html__( 'object', 'debug-bar-give' ) . '</em>] ' . $signature . '</li>';
+							} else {
+								// Type 8 - undetermined.
+								echo '<li><pre>' . var_export( $single_function, true ) . '</pre></li>';
+							} // End if().
+						} // End foreach().
+						echo '</ul></td>';
+					} // End foreach().
+					echo '</tr>';
+				} else {
+					$table .= '<td>&nbsp;</td><td>&nbsp;</td></tr>';
+				}
+			} // End foreach().
+			?>
+			</tbody>
+		</table>
+		<?php
 	}
 }
