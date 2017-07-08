@@ -278,7 +278,7 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	private function display_filter_hooks( $filter_hooks = array() ) {
 		$hook_in_count = 0;
 		?>
-		<table class="debug-bar-give-filters" cellspacing="0">
+		<table class="debug-bar-give-table debug-bar-give-filters" cellspacing="0">
 			<thead><tr>
 				<th class="filter-name"><?php esc_html_e( 'Filter', 'debug-bar-give' ); ?></th>
 				<th class="filter-priority"><?php esc_html_e( 'Priority', 'debug-bar-give' ); ?></th>
