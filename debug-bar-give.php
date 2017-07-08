@@ -25,7 +25,7 @@
  * Don't call this file directly.
  */
 if ( ! class_exists( 'WP' ) ) {
-	die();
+	wp_die();
 }
 
 /**
