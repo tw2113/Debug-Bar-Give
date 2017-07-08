@@ -255,18 +255,17 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 */
 	private function display_action_hooks( $action_hooks = array() ) {
 
-		echo '<table class="debug-bar-give-table" cellspacing="0">';
-		echo '<thead><tr>';
-		echo '<th class="action-name">' . esc_html__( 'Action', 'debug-bar-give' ) . '</th>';
-		echo '</tr></thead>';
-
-		foreach ( $action_hooks as $hook => $value ) {
-			echo '<tr>';
-			echo "<td>{$hook}</td>";
-			echo '</tr>';
+		$count = ceil( count( $action_hooks ) / 2 );
+		$action_hook_chunks = array_chunk( $action_hooks, $count, true );
+		foreach ( $action_hook_chunks as $chunk ) {
+			echo '<div class="debug-bar-give-actions-list"><ul>';
+			foreach ( $chunk as $hook => $value ) {
+				?>
+					<li><?php echo esc_html( $hook ); ?></li>
+				<?php
+			}
+			echo '</ul></div>';
 		}
-
-		echo '</table>';
 	}
 
 	/**
