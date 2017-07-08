@@ -44,6 +44,22 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	private $give_filters = array();
 
 	/**
+	 * Holds the post ID to use.
+	 *
+	 * @since 1.0.0
+	 * @var int
+	 */
+	private $give_post_id = 0;
+
+	/**
+	 * Holds whether or not we have a form to use.
+	 *
+	 * @since 1.0.0
+	 * @var bool
+	 */
+	private $give_has_form = false;
+
+	/**
 	 * Give the panel a title and set the enqueues.
 	 *
 	 * @since 1.0.0
