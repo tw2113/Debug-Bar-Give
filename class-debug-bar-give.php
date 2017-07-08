@@ -225,21 +225,25 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 * @param array $meta_fields The transients in an array.
 	 */
 	private function display_meta_fields( $meta_fields = array() ) {
-
-		echo '<table class="debug-bar-give-table" cellspacing="0">';
-		echo '<thead><tr>';
-		echo '<th class="meta-name">' . esc_html__( 'Meta key', 'debug-bar-give' ) . '</th>';
-		echo '<th class="meta-value">' . esc_html__( 'Meta value', 'debug-bar-give' ) . '</th>';
-		echo '</tr></thead>';
-
-		foreach ( $meta_fields as $field => $data ) {
-			echo '<tr>';
-			echo "<td>{$field}</td>";
-			echo "<td>{$data}</td>";
-			echo '</tr>';
-		}
-
-		echo '</table>';
+		?>
+		<table class="debug-bar-give-table debug-bar-give-meta" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="meta-name"><?php esc_html_e( 'Meta key', 'debug-bar-give' ); ?></th>
+					<th class="meta-value"><?php esc_html_e( 'Meta value', 'debug-bar-give' ); ?></th>
+				</tr>
+			</thead>
+			<?php
+			foreach ( $meta_fields as $field => $data ) {
+				?>
+				<tr>
+					<td><?php echo esc_html( $field ); ?></td>
+					<td><?php echo esc_html( $data ); ?></td>
+				</tr>
+				<?php
+			} ?>
+		</table>
+		<?php
 	}
 
 	/**
