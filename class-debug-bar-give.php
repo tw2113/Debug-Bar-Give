@@ -120,10 +120,11 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 		}
 
 		if ( $this->give_has_form ) {
-			$this->set_give_actions();
-			$this->set_give_filters();
 			$this->set_give_meta();
 		}
+
+		$this->set_give_actions();
+		$this->set_give_filters();
 	}
 
 	/**
