@@ -1,25 +1,24 @@
 <?php
 /**
+ * Debug Bar Give Loader
+ *
+ * @package DebugBarGive
+ * @since 1.0.0
+ */
+
+/**
  * Plugin Name: Debug Bar Give
- * Version: 0.5
- * Description: Adds information about the WordPress Transient API to Debug Bar.
- * Author: Dominik Schilling
- * Author URI: https://wphelper.de/
- * Plugin URI: https://dominikschilling.de/wp-plugins/debug-bar-transients/en/
- * Text Domain: debug-bar-transients
- * License: GPLv2 or later
- *    Copyright (C) 2011-2016 Dominik Schilling
- *    This program is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU General Public License
- *    as published by the Free Software Foundation; either version 2
- *    of the License, or (at your option) any later version.
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- *    You should have received a copy of the GNU General Public License
- *    along with this program; if not, write to the Free Software
- *    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Version: 1.0.0
+ * Description: Adds information about GiveWP to Debug Bar.
+ * Author: Michael Beckwith
+ * Author URI: https://michaelbox.net
+ * Plugin URI: https://michaelbox.net
+ * Text Domain: debug-bar-give
+ * License: MIT
+ */
+
+/**
+ * Plenty of credit goes to Subharanjan and https://wordpress.org/plugins/debug-bar-actions-and-filters-addon/
  */
 
 /**
@@ -32,7 +31,7 @@ if ( ! class_exists( 'WP' ) ) {
 /**
  * Adds panel, as defined in the included class, to Debug Bar.
  *
- * @param $panels array
+ * @param array $panels Array of panels to render.
  *
  * @return array
  */
