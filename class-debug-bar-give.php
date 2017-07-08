@@ -76,7 +76,6 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 */
 	public function print_styles() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$file = plugins_url( "css/debug-bar-give{$suffix}.css", __FILE__ );
 		wp_enqueue_style( 'debug-bar-give', plugins_url( "css/debug-bar-give{$suffix}.css", __FILE__ ) );
 	}
 
