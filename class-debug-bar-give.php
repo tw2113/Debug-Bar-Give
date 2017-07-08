@@ -113,9 +113,17 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 */
 	public function prerender() {
 		$this->set_visible( true );
-		$this->set_give_actions();
-		$this->set_give_filters();
-		$this->set_give_meta();
+
+		global $post;
+		if ( $post instanceof WP_Post ) {
+			$this->has_give_form( $post );
+		}
+
+		if ( $this->give_has_form ) {
+			$this->set_give_actions();
+			$this->set_give_filters();
+			$this->set_give_meta();
+		}
 	}
 
 	/**
