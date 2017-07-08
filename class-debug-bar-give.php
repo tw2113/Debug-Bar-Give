@@ -132,8 +132,7 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 * @since 1.0.0
 	 */
 	public function render() {
-		global $post;
-		if ( ! $post instanceof WP_Post || 'give_forms' !== $post->post_type ) {
+		if ( ! $this->give_has_form ) {
 			echo '<h2>' . esc_html__( 'No GiveWP form found.', 'debug-bar-give' ) . '</h2>';
 			return;
 		}
@@ -141,7 +140,7 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 		printf(
 			'<h2><span>%s</span>%s</h2>',
 			esc_html__( 'Current GiveWP form ID:', 'debug-bar-give' ),
-			number_format( $post->ID )
+			number_format( $this->give_post_id )
 		);
 
 		printf(
@@ -227,17 +226,14 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 * @since 1.0.0
 	 */
 	private function set_give_meta() {
-		global $post;
 
-		if ( 'give_forms' === $post->post_type ) {
-			$this->give_meta = get_post_meta( $post->ID );
+		$this->give_meta = get_post_meta( $this->give_post_id );
 
-			foreach ( $this->give_meta as $key => $value ) {
-				if ( '_give' !== substr( $key, 0, 5 ) ) {
-					continue;
-				}
-				$this->give_meta_filtered[ $key ] = $value[0];
+		foreach ( $this->give_meta as $key => $value ) {
+			if ( '_give' !== substr( $key, 0, 5 ) ) {
+				continue;
 			}
+			$this->give_meta_filtered[ $key ] = $value[0];
 		}
 	}
 
