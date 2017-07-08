@@ -218,7 +218,7 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 */
 	private function display_meta_fields( $meta_fields = array() ) {
 
-		echo '<table cellspacing="0">';
+		echo '<table class="debug-bar-give-table" cellspacing="0">';
 		echo '<thead><tr>';
 		echo '<th class="meta-name">' . esc_html__( 'Meta key', 'debug-bar-give' ) . '</th>';
 		echo '<th class="meta-value">' . esc_html__( 'Meta value', 'debug-bar-give' ) . '</th>';
@@ -243,7 +243,7 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 	 */
 	private function display_action_hooks( $action_hooks = array() ) {
 
-		echo '<table cellspacing="0">';
+		echo '<table class="debug-bar-give-table" cellspacing="0">';
 		echo '<thead><tr>';
 		echo '<th class="action-name">' . esc_html__( 'Action', 'debug-bar-give' ) . '</th>';
 		echo '</tr></thead>';
