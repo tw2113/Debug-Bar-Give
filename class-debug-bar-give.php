@@ -1,5 +1,12 @@
 <?php
 /**
+ * Debug Bar Give Panel
+ *
+ * @package DebugBarGive
+ * @since   1.0.0
+ */
+
+/**
  * Add a new Debug Bar Panel.
  */
 class Debug_Bar_Give extends Debug_Bar_Panel {
