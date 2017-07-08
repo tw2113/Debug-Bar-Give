@@ -292,6 +292,7 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 			<tbody>
 			<?php
 			foreach ( $filter_hooks as $hook => $value ) {
+				$filter_val = array();
 				if ( $value instanceof WP_Hook ) {
 					$filter_val = $value->callbacks;
 				}
