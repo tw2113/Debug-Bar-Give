@@ -301,21 +301,21 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 
 				$rowspan = '';
 				if ( $filter_count > 1 ) {
-					$rowspan = ' rowspan="' . $filter_count . '"';
+					$rowspan = 'rowspan="' . $filter_count . '"';
 				}
 
 				echo '<tr>';
-				echo "<th{$rowspan}>{$hook}</th>";
+				echo '<th ' . esc_attr( $rowspan ) . '>' . esc_html( $hook ) . '</th>';
 
 				if ( $filter_count > 0 ) {
 					$first = true;
 					foreach ( $value->callbacks as $priority => $functions ) {
-						if ( $first !== true ) {
+						if ( true !== $first ) {
 							echo '<tr>';
 						} else {
 							$first = false;
 						}
-						echo '<td class="prio">' . $priority . '</td>';
+						echo '<td class="prio">' . esc_html( $priority ) . '</td>';
 						echo '<td><ul>';
 						foreach ( $functions as $single_function ) {
 							$signature = $single_function['function'];
@@ -359,14 +359,14 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 							) {
 								// Type 4 - simple string function (includes lambda's).
 								$signature = sanitize_text_field( $single_function['function'] );
-								echo '<li>' . $signature . '</li>';
+								echo '<li>' . esc_html( $signature ) . '</li>';
 							} elseif (
 								is_string( $single_function['function'] ) &&
 								strpos( $single_function['function'], '::' ) !== false
 							) {
 								// Type 5 - static class method calls - string.
 								$signature = str_replace( '::', ' :: ', sanitize_text_field( $single_function['function'] ) );
-								echo '<li>[<em>' . esc_html__( 'class', 'debug-bar-give' ) . '</em>] ' . $signature . '</li>';
+								echo '<li>[<em>' . esc_html__( 'class', 'debug-bar-give' ) . '</em>] ' . esc_html( $signature ) . '</li>';
 							} elseif (
 								is_array( $single_function['function'] ) &&
 								(
@@ -386,18 +386,20 @@ class Debug_Bar_Give extends Debug_Bar_Panel {
 							) {
 								// Type 7 - object method calls.
 								$signature = esc_html( get_class( $single_function['function'][0] ) ) . ' -> ' . sanitize_text_field( $single_function['function'][1] );
-								echo '<li>[<em>' . esc_html__( 'object', 'debug-bar-give' ) . '</em>] ' . $signature . '</li>';
+								echo '<li>[<em>' . esc_html__( 'object', 'debug-bar-give' ) . '</em>] ' . esc_html( $signature ) . '</li>';
 							} else {
 								// Type 8 - undetermined.
-								echo '<li><pre>' . var_export( $single_function, true ) . '</pre></li>';
+								esc_html_e( 'Undetermined callback', 'debug-bar-give' );
 							} // End if().
 						} // End foreach().
 						echo '</ul></td>';
 					} // End foreach().
 					echo '</tr>';
 				} else {
-					$table .= '<td>&nbsp;</td><td>&nbsp;</td></tr>';
-				}
+					?>
+					<td>&nbsp;</td><td>&nbsp;</td></tr>
+					<?php
+				} // End if().
 			} // End foreach().
 			?>
 			</tbody>
